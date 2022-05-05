@@ -18,7 +18,7 @@ class Machine {
     void cook() {
         showIngredients();
         while (true) {
-            addIngredients();
+            addIngredientsIfNotEnough();
             askCoffee();
             String input = scanner.nextLine();
             printWrongInput(input);
@@ -77,7 +77,7 @@ class Machine {
                 """, coffeeHave, waterHave));
     }
 
-    private boolean isEnoughIngredients() {
+    private boolean isNotEnoughIngredients() {
         return coffee.coffeeNeed() > coffeeHave || coffee.waterNeed() > waterHave;
     }
 
@@ -89,17 +89,17 @@ class Machine {
                 """);
     }
 
-    private void addIngredients() {
-        if (isEnoughIngredients()) {
+    private void addIngredientsIfNotEnough() {
+        if (isNotEnoughIngredients()) {
             askAddIngredients();
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("y")) {
-                addingIngredients();
+                addingIngredientsIntoContainer();
             }
         }
     }
 
-    private void addingIngredients() {
+    private void addingIngredientsIntoContainer() {
         coffeeHave += 300;
         waterHave += 800;
     }
