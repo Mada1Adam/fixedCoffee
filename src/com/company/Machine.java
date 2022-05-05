@@ -21,10 +21,11 @@ class Machine {
             addIngredients();
             askCoffee();
             String input = scanner.nextLine();
+            printWrongInput(input);
             if (isReadyToCook(input)) {
                 cookCoffee();
                 printCoffeePicture();
-            } else {
+            } else if (noCoffee(input)) {
                 showMessage("Goodbye");
                 break;
             }
@@ -77,7 +78,7 @@ class Machine {
     }
 
     private boolean isEnoughIngredients() {
-        return coffee.coffeeNeed() > coffeeHave && coffee.waterNeed() > waterHave;
+        return coffee.coffeeNeed() > coffeeHave || coffee.waterNeed() > waterHave;
     }
 
     private void askAddIngredients(){
@@ -102,5 +103,18 @@ class Machine {
         coffeeHave += 300;
         waterHave += 800;
     }
-}
 
+    private void printWrongInput(String input) {
+        if(!checkInput(input)){
+            showMessage("Wrong input, try again");
+        }
+    }
+
+    private boolean checkInput(String input) {
+        return input.equalsIgnoreCase("y") || input.equalsIgnoreCase("n");
+    }
+
+    public boolean noCoffee(String input) {
+        return input.equalsIgnoreCase("n");
+        }
+    }
