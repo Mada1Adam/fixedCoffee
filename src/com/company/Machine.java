@@ -18,6 +18,7 @@ class Machine {
     void cook() {
         showIngredients();
         while (true) {
+            addIngredients();
             askCoffee();
             String input = scanner.nextLine();
             if (isReadyToCook(input)) {
@@ -67,10 +68,39 @@ class Machine {
                 ┈┈╲▂▂▂▂╱┈┈┈
                 """);
     }
+
     private void showIngredients() {
         showMessage(String.format("""
                 coffee you have: %d
                 water you have: %d
                 """, coffeeHave, waterHave));
     }
+
+    private boolean isEnoughIngredients() {
+        return coffee.coffeeNeed() > coffeeHave && coffee.waterNeed() > waterHave;
+    }
+
+    private void askAddIngredients(){
+        showMessage("""
+                Not enough ingredients, add some?
+                'y' for 'yes'
+                'n' for 'no'
+                """);
+    }
+
+    private void addIngredients() {
+        if (isEnoughIngredients()) {
+            askAddIngredients();
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("y")) {
+                addingIngredients();
+            }
+        }
+    }
+
+    private void addingIngredients() {
+        coffeeHave += 300;
+        waterHave += 800;
+    }
 }
+
