@@ -9,7 +9,6 @@ class WaterContainer implements Container {
         waterHave -= amountToUse;
     }
 
-
     @Override
     public void add(int amountToAdd) {
         waterHave += amountToAdd;

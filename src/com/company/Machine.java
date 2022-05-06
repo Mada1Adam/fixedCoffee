@@ -82,7 +82,7 @@ class Machine {
         return coffee.coffeeNeed() > coffeeContainer.amountWeHave() || coffee.waterNeed() > waterContainer.amountWeHave();
     }
 
-    private void askAddIngredients(){
+    private void askAddIngredients() {
         showMessage("""
                 Not enough ingredients, add some?
                 'y' for 'yes'
@@ -108,7 +108,7 @@ class Machine {
     }
 
     private void printWrongInput(String input) {
-        if(!checkInput(input)){
+        if (!checkInput(input)) {
             showMessage("Wrong input, try again");
         }
     }

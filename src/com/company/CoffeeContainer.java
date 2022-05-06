@@ -9,7 +9,6 @@ class CoffeeContainer implements Container {
         coffeeHave -= amountToUse;
     }
 
-
     @Override
     public void add(int amountToAdd) {
         coffeeHave += amountToAdd;
