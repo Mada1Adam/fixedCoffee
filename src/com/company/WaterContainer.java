@@ -1,28 +1,27 @@
 package com.company;
 
-class CoffeeContainer implements Container {
+class WaterContainer implements Container {
 
-    private int coffeeHave;
+    private int waterHave;
 
     @Override
     public void use(int amountToUse) {
-        coffeeHave -= amountToUse;
+        waterHave -= amountToUse;
     }
 
 
     @Override
     public void add(int amountToAdd) {
-        coffeeHave += amountToAdd;
+        waterHave += amountToAdd;
     }
 
     @Override
     public int amountWeHave() {
-        return coffeeHave;
+        return waterHave;
     }
 
     @Override
     public void addRandomAmount() {
-        coffeeHave += Math.random() * 800;
+        waterHave += Math.random() * 1500;
     }
-
 }

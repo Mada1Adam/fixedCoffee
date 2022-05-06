@@ -5,21 +5,22 @@ class Machine {
 
     private final Drink coffee; //declare fields
     private final Scanner scanner;
-    private final Container coffeeContainer; //Container
-    private int waterHave;
+    private final Container coffeeContainer;
+    private final Container waterContainer;
 
     Machine() {
-        coffeeContainer = new CoffeeContainer();
-        coffee = new Drink(50, 300); //values for fields
+        coffeeContainer = new CoffeeContainer(); //values for fields
+        coffeeContainer.addRandomAmount();
+        waterContainer = new WaterContainer();
+        waterContainer.addRandomAmount();
+        coffee = new Drink(50, 300);
         scanner = new Scanner(System.in);
-        waterHave = (int) (Math.random() * 1500);
     }
 
     void cook() {
         showIngredients();
         while (true) {
             addIngredientsIfNotEnough();
-            askCoffee();
             String input = scanner.nextLine();
             printWrongInput(input);
             if (isReadyToCook(input)) {
@@ -46,14 +47,14 @@ class Machine {
     }
 
     private void cookCoffee() {
-        coffeeContainer -= coffee.coffeeNeed();
-        waterHave -= coffee.waterNeed();
+        coffeeContainer.use(coffee.coffeeNeed());
+        waterContainer.use(coffee.waterNeed());
     }
 
     private boolean isReadyToCook(String input) {
         return input.equalsIgnoreCase("y")
-                && coffeeContainer > coffee.coffeeNeed()
-                && waterHave > coffee.waterNeed();
+                && coffeeContainer.amountWeHave() > coffee.coffeeNeed()
+                && waterContainer.amountWeHave() > coffee.waterNeed();
     }
 
     private void printCoffeePicture() {
@@ -74,11 +75,11 @@ class Machine {
         showMessage(String.format("""
                 coffee you have: %d
                 water you have: %d
-                """, coffeeContainer, waterHave));
+                """, coffeeContainer.amountWeHave(), waterContainer.amountWeHave()));
     }
 
     private boolean isNotEnoughIngredients() {
-        return coffee.coffeeNeed() > coffeeContainer || coffee.waterNeed() > waterHave;
+        return coffee.coffeeNeed() > coffeeContainer.amountWeHave() || coffee.waterNeed() > waterContainer.amountWeHave();
     }
 
     private void askAddIngredients(){
@@ -96,12 +97,14 @@ class Machine {
             if (input.equalsIgnoreCase("y")) {
                 addingIngredientsIntoContainer();
             }
+        } else {
+            askCoffee();
         }
     }
 
     private void addingIngredientsIntoContainer() {
-        coffeeContainer += 300;
-        waterHave += 800;
+        coffeeContainer.add(300);
+        waterContainer.add(800);
     }
 
     private void printWrongInput(String input) {
@@ -116,5 +119,5 @@ class Machine {
 
     public boolean noCoffee(String input) {
         return input.equalsIgnoreCase("n");
-        }
     }
+}
