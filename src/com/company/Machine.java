@@ -5,8 +5,8 @@ class Machine {
 
     private final Drink coffee; //declare fields
     private final Scanner scanner;
-    private int coffeeHave;
-    private int waterHave;
+    private int coffeeHave; //Container
+    private int waterHave; //Container
 
     Machine() {
         coffee = new Drink(50, 300); //values for fields
