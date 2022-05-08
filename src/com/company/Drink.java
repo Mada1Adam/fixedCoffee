@@ -1,4 +1,6 @@
 package com.company;
 
-record Drink(int coffeeNeed, int waterNeed) {
+interface Drink {
+
+    int getAmountNeed();
 }

@@ -3,17 +3,24 @@ import java.util.Scanner;
 
 class Machine {
 
-    private final Drink coffee; //declare fields
-    private final Scanner scanner;
+    private final Drink coffee;
+    private final Drink water;
+    private final Drink milk;
+    private final Container milkContainer;
     private final Container coffeeContainer;
     private final Container waterContainer;
+    private final Scanner scanner;
 
     Machine() {
         coffeeContainer = new CoffeeContainer(); //values for fields
-        coffeeContainer.addRandomAmount();
         waterContainer = new WaterContainer();
+        milkContainer = new MilkContainer();
+        coffee = new Coffee(30);
+        water = new Water(300);
+        milk = new Milk(200);
+        coffeeContainer.addRandomAmount();
         waterContainer.addRandomAmount();
-        coffee = new Drink(50, 300);
+        milkContainer.addRandomAmount();
         scanner = new Scanner(System.in);
     }
 
@@ -47,14 +54,14 @@ class Machine {
     }
 
     private void cookCoffee() {
-        coffeeContainer.use(coffee.coffeeNeed());
-        waterContainer.use(coffee.waterNeed());
+        coffeeContainer.use(coffee.getAmountNeed());
+        waterContainer.use(water.getAmountNeed());
     }
 
     private boolean isReadyToCook(String input) {
         return input.equalsIgnoreCase("y")
-                && coffeeContainer.amountWeHave() > coffee.coffeeNeed()
-                && waterContainer.amountWeHave() > coffee.waterNeed();
+                && coffeeContainer.amountWeHave() > coffee.getAmountNeed()
+                && waterContainer.amountWeHave() > water.getAmountNeed();
     }
 
     private void printCoffeePicture() {
@@ -79,7 +86,7 @@ class Machine {
     }
 
     private boolean isNotEnoughIngredients() {
-        return coffee.coffeeNeed() > coffeeContainer.amountWeHave() || coffee.waterNeed() > waterContainer.amountWeHave();
+        return coffee.getAmountNeed() > coffeeContainer.amountWeHave() || water.getAmountNeed() > waterContainer.amountWeHave();
     }
 
     private void askAddIngredients() {
